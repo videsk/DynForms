@@ -52,7 +52,7 @@ module.exports = class DynForm {
     // Get label value
     const labelInOptions = () => {
       const obj = form.options[form.options.findIndex(obj => obj.value === newValue)];
-      return (obj && 'label' in obj)  ? label : '';
+      return (obj && 'label' in obj) ? obj.label : '';
     };
     const label = ('options' in form)
       ? labelInOptions()
