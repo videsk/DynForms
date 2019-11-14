@@ -50,8 +50,12 @@ module.exports = class DynForm {
     // Get form of field
     const form = self.searchProperty(id);
     // Get label value
+    const labelInOptions = () => {
+      const obj = form.options[form.options.findIndex(obj => obj.value === newValue)];
+      return (obj && 'label' in obj)  ? label : '';
+    };
     const label = ('options' in form)
-      ? form.options[form.options.findIndex(obj => obj.value === newValue)].label
+      ? labelInOptions()
       : form.label;
     // Search index in value
     const indexValue = (Array.isArray(value)) && value.findIndex(obj => obj.value === newValue);
@@ -107,10 +111,10 @@ module.exports = class DynForm {
     this.Debug('info', `Creating a ${obj.type} form element...`);
     // Get properties of form element
     let component = this.components(this.prefix)[obj.type];
-    // Create element
-    const element = this.createElement(this.mergeProperties(component, obj), null, obj.id);
     // Add to data array
     this.data.push({ id: obj.id, value: component.data });
+    // Create element
+    const element = this.createElement(this.mergeProperties(component, obj), null, obj.id);
     // Return element
     return element;
   };
@@ -167,12 +171,14 @@ module.exports = class DynForm {
 
   setEvents(element, id, events) {
     this.Debug('info', `Setting events of ${id} element...`);
+    const data = this.searchData(id);
+    const properties = this.searchProperty(id);
     Object.keys(events).map(event => events[event](
         element, // element
         id, // id
         this.updateData, // update
-        this.searchData(id), // data
-        this.searchProperty(id), // form
+        data, // data
+        properties, // form
         this, // self
       )
     );
@@ -202,14 +208,8 @@ module.exports = class DynForm {
   searchData(id) {
     if (!id) this.Debug('warn', 'The id is null, please check.  Read documentation: https://github.com/videsk/DynForms');
     this.Debug('info', `Searching data of ${id} field...`);
-    let foo = null;
     const index = this.data.findIndex(obj => obj.id === id);
-    foo = this.data[index];
-    if (foo) return foo;
-    else {
-      return this.data.filter(obj => obj.id === id);
-
-    }
+    return this.data[index];
   }
 
   parseValue(value) {

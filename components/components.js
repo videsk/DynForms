@@ -446,15 +446,20 @@ export default (prefix) => ({
         events: {
           onclick: (element, id, update, data, form, self) => {
             element.onclick = function () {
-              console.log(data);
+              // Get the node
               const node = document.querySelector(`[dyn-data-id="${id}"]`);
+              // Get clearable attribute
               const clearable = node.getAttribute('clearable');
-              if (clearable !== null && data.value.value !== '') document.querySelectorAll(`[dyn-data-id="${id}"] li`).forEach(option => option.classList.remove(`${prefix}selected`));
-              else if (clearable !== null && data.value.value === '') {
+              // If value is null set value
+              if (clearable !== null && data.value.value.length > 0) {
+                document.querySelectorAll(`[dyn-data-id="${id}"] li`).forEach(option => option.classList.remove(`${prefix}selected`));
+                update(id, '', self);
+              }
+              else if (clearable !== null && data.value.value.length === 0) {
                 element.classList.add(`${prefix}selected`);
                 update(id, element.getAttribute('data-value'), self);
               }
-              else if (clearable === null && data.value.value === '') {
+              else if (clearable === null && data.value.value.length === 0) {
                 element.classList.add(`${prefix}selected`);
                 update(id, element.getAttribute('data-value'), self);
               }

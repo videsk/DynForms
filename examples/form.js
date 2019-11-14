@@ -4,13 +4,13 @@ const form1 = [
   {
     type: 'input',
     id: `name${random()}`,
-    label: 'Name',
-    placeholder: 'Write your name here',
+    label: 'Nombre',
+    placeholder: 'Escribe tu nombre aquí',
     attr: {
       class: 'test',
     },
     helps: {
-      label: 'This is your name',
+      label: 'Ese es tu nombre',
     }
   },
   {
@@ -75,6 +75,13 @@ const form3 = [
     options: [
       { label: 'Blue', value: 'blue' },
       { label: 'Green', value: 'green' },
+      { label: 'Black', value: 'black' },
+      { label: 'Black', value: 'black' },
+      { label: 'Black', value: 'black' },
+      { label: 'Black', value: 'black' },
+      { label: 'Black', value: 'black' },
+      { label: 'Black', value: 'black' },
+      { label: 'Black', value: 'black' },
       { label: 'Black', value: 'black' },
     ],
     helps: {
