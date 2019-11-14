@@ -1,0 +1,443 @@
+<html>
+    <head>
+        <title>Multiple Component</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+
+            * {
+                font-family: sans-serif;
+                box-sizing: border-box;
+            }
+
+            html, body{
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                font-size: 14px;
+            }
+
+            .container {
+                width: 200px;
+                height: auto;
+            }
+
+            .select {
+                width: 100%;
+                min-height: 32px;
+                border: 1px solid #d9d9d9;
+                border-radius: 4px;
+                font-size: 1em;
+                background: white;
+                color: rgba(0, 0, 0, 0.65);
+                padding: 4px 11px;
+                display: flex;
+                position: relative;
+                align-items: center;
+                justify-content: flex-start;
+                margin-bottom: 5px;
+            }
+
+            .select:focus, .select.focused{
+                border-color: #40a9ff;
+                border-right-width: 1px !important;
+                outline: 0;
+                box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+            }
+
+            .select-value-container{
+                width: 100%;
+                display: flex;
+            }
+
+            .select-value{
+                width: 90%;
+                cursor: pointer;
+            }
+
+            .select[filterable] .select-value{
+                cursor: text;
+            }
+
+            .select-value input, .select-value input:hover{
+                pointer-events: none;
+                width: 100%;
+                height: 100%;
+                border: none;
+                outline: 0;
+                color: inherit;
+                font-size: 1em;
+                cursor: pointer;
+            }
+
+            .select[filterable] .select-value input, .select[filterable] .select-value input:hover{
+                pointer-events: auto;
+                cursor: text;
+            }
+
+            .select-value input::placeholder{
+                color: #d9d9d9;
+            }
+
+            .select-selections:not(:empty) ~ input {
+                display: none;
+            }
+
+            .select[filterable] .select-selections:not(:empty) ~ input {
+                display: block;
+            }
+
+            .select[filterable] .select-selections:not(:empty) ~ input::placeholder{
+                opacity: 0;
+            }
+
+            .select ul.select-selections {
+                display: flex;
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                flex-wrap: wrap;
+            }
+
+            .select ul.select-selections li{
+                display: flex;
+                margin-right: 5px;
+                background: #fafafa;
+                border: 1px solid #e8e8e8;
+                padding: 0 10px;
+                border-radius: 4px;
+                cursor: default;
+                transition: padding 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+                margin-bottom: 3px;
+            }
+
+            .select-container-value{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .select-container-value label{
+                font-size: 1em;
+                color: rgba(0, 0, 0, 0.65);
+            }
+
+            .select-container-value .select-remove-value{
+                width: 0.8em;
+                height: 0.8em;
+                background: url('../img/delete.svg') no-repeat center center / contain;
+                cursor: pointer;
+                opacity: 0.4;
+                margin-left: 3px;
+            }
+
+            .select-arrow{
+                width: 10%;
+            }
+
+            .select-arrow:after{
+                content: '';
+                width: 100%;
+                height: 100%;
+                display: block;
+                background: url('../img/arrow.svg') no-repeat center center / 0.92em;
+                transition: all .3s ease;
+            }
+
+            .select:focus .select-arrow:after, .select.focused .select-arrow:after{
+                transform: rotate(180deg);
+            }
+
+            .select-container{
+                position: absolute;
+                top: calc(100% + 1px);
+                left: 0;
+                right: 0;
+                width: 100%;
+                border-radius: 4px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+                background: white;
+                overflow: hidden;
+                height: 0;
+                opacity: 0;
+                transition: all .4s ease;
+                z-index: 1;
+            }
+
+            .select:focus .select-container, .select.focused .select-container{
+                height: auto;
+                opacity: 1;
+            }
+
+            .select-container ul {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                max-height: 250px;
+                overflow: auto;
+                overflow-x: hidden;
+            }
+
+            .select-container ul li{
+                width: 100%;
+                padding: 7px 11px;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+            }
+
+            .select[filterable] .select-container ul li.hidden{
+                display: none;
+            }
+
+            .select-container ul li.selected{
+                background: #fafafa;
+                font-weight: 600;
+                color: rgba(0, 0, 0, 0.65);
+            }
+
+            .select-container ul li:hover{
+                background: #e6f7ff;
+            }
+
+            .option-label{
+                width: 90%;
+                height: 100%;
+                font-size: 1em;
+            }
+
+            .selected-icon{
+                width: 10%;
+                height: 0.92em;
+            }
+
+            .select-container ul li.selected .selected-icon:after{
+                content: '';
+                width: 100%;
+                height: 100%;
+                display: block;
+                background: url('../img/check.svg') no-repeat center center / 0.92em;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="select" id="select1" tabindex="0">
+                <div class="select-value-container">
+                    <div class="select-value">
+                        <ul class="select-selections"></ul>
+                        <input placeholder="Select an option..."/>
+                    </div>
+                    <div class="select-arrow"></div>
+                </div>
+                <div class="select-container">
+                    <ul>
+                        <li value="option1">
+                            <div class="option-label">Option 1</div>
+                            <div class="selected-icon"></div>
+                        </li>
+                        <li value="option2">
+                            <div class="option-label">Option 2</div>
+                            <div class="selected-icon"></div>
+                        </li>
+                        <li value="option3">
+                            <div class="option-label">Option 3</div>
+                            <div class="selected-icon"></div>
+                        </li>
+                        <li value="option4">
+                            <div class="option-label">Option 4</div>
+                            <div class="selected-icon"></div>
+                        </li>
+                        <li value="option5">
+                            <div class="option-label">Option 5</div>
+                            <div class="selected-icon"></div>
+                        </li>
+                        <li value="option6">
+                            <div class="option-label">Option 6</div>
+                            <div class="selected-icon"></div>
+                        </li>
+                        <li value="option7">
+                            <div class="option-label">Option 7</div>
+                            <div class="selected-icon"></div>
+                        </li>
+                        <li value="option8">
+                            <div class="option-label">Option 8</div>
+                            <div class="selected-icon"></div>
+                        </li>
+                        <li value="option9">
+                            <div class="option-label">Option 9</div>
+                            <div class="selected-icon"></div>
+                        </li>
+                        <li value="option10">
+                            <div class="option-label">Option 10</div>
+                            <div class="selected-icon"></div>
+                        </li>
+                        <li value="option11">
+                            <div class="option-label">Option 11</div>
+                            <div class="selected-icon"></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="select" id="select2" tabindex="0" filterable>
+                <div class="select-value-container">
+                    <div class="select-value">
+                        <ul class="select-selections"></ul>
+                        <input placeholder="Filter an option..."/>
+                    </div>
+                    <div class="select-arrow"></div>
+                </div>
+                <div class="select-container">
+                    <ul>
+                        <li value="CL">
+                            <div class="option-label">Chile</div>
+                            <div class="selected-icon"></div>
+                        </li>
+                        <li value="EEUU">
+                            <div class="option-label">EEUU</div>
+                            <div class="selected-icon"></div>
+                        </li>
+                        <li value="CH">
+                            <div class="option-label">China</div>
+                            <div class="selected-icon"></div>
+                        </li>
+                        <li value="ES">
+                            <div class="option-label">Spain</div>
+                            <div class="selected-icon"></div>
+                        </li>
+                        <li value="JP">
+                            <div class="option-label">Japan</div>
+                            <div class="selected-icon"></div>
+                        </li>
+                        <li value="BR">
+                            <div class="option-label">Brazil</div>
+                            <div class="selected-icon"></div>
+                        </li>
+                        <li value="AR">
+                            <div class="option-label">Argentina</div>
+                            <div class="selected-icon"></div>
+                        </li>
+                        <li value="IR">
+                            <div class="option-label">Irish</div>
+                            <div class="selected-icon"></div>
+                        </li>
+                        <li value="BT">
+                            <div class="option-label">Botswana</div>
+                            <div class="selected-icon"></div>
+                        </li>
+                        <li value="IN">
+                            <div class="option-label">India</div>
+                            <div class="selected-icon"></div>
+                        </li>
+                        <li value="PN">
+                            <div class="option-label">Panama</div>
+                            <div class="selected-icon"></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="value"></div>
+        <script>
+            const select1 = document.querySelector('#select1');
+            const input1 = document.querySelector('#select1 input');
+
+            const select2 = document.querySelector('#select2');
+            const input2 = document.querySelector('#select2 input');
+
+            const form1 = [];
+
+            const form2 = [];
+
+            const showHidden = () => document.querySelectorAll('#select2 .select-container ul > li').forEach(option => option.classList.remove('hidden'));
+            const hideAll = () => document.querySelectorAll('#select2 .select-container ul > li').forEach(option => option.classList.add('hidden'));
+
+            const removeSelected = (select, option, form) => {
+              // Delete selected class
+              option.classList.remove('selected');
+              // Get the value of option
+              const value = option.getAttribute('value');
+              // Get the index in array form
+              const index = form1.findIndex(el => el.value === value);
+              // Delete from array
+              form.splice(index, 1);
+              // Remove from selection
+              removeFromSelections(select, value);
+            };
+
+            const removeFromSelections = (select, value) => {
+              // Get the list of elements
+                  const node = document.querySelector(`${select} .select-selections > li[data-value="${value}"]`);
+              if (node) node.remove();
+            };
+
+            const createSelection = (select, value, label, option, form) => {
+              const node = document.createElement('li');
+              const Label = document.createElement('label');
+              const close = document.createElement('div');
+              node.classList.add('select-container-value');
+              close.classList.add('select-remove-value');
+              close.onclick = function (event) {
+                event.stopPropagation();
+                removeSelected(select, option, form);
+              };
+              Label.innerText = label;
+              node.setAttribute('data-value', value);
+              node.appendChild(Label);
+              node.appendChild(close);
+              document.querySelector(`${select} .select-selections`).appendChild(node);
+            };
+
+            const addSelected = (select, option, form) => {
+              const value = option.getAttribute('value');
+              const label = option.childNodes[1].innerText;
+              form.push({ value, label });
+              createSelection(select, value, label, option, form);
+              option.classList.add('selected');
+              if (input2.value.length > 0) {
+                input2.value = '';
+                input2.focus();
+              }
+            };
+
+            document.querySelectorAll('#select1 .select-container ul > li').forEach(option => {
+              option.onclick = function() {
+                if (option.classList.contains('selected')) removeSelected('#select1', option, form1);
+                else addSelected('#select1', option, form1);
+              };
+            });
+
+            document.querySelectorAll('#select2 .select-container ul > li').forEach(option => {
+              option.onclick = function(event) {
+                if (option.classList.contains('selected')) removeSelected('#select2', option, form2);
+                else addSelected('#select2', option, form2);
+              };
+            });
+
+            input2.onfocus = function() {
+              select2.classList.add('focused');
+              showHidden();
+            };
+
+            input2.onblur = function () {
+              select2.classList.remove('focused');
+            };
+
+            input2.onkeyup = function () {
+              const { value } = input2;
+              hideAll();
+              document.querySelectorAll('#select2 .select-container ul > li').forEach(option => {
+                if (option.childNodes[1].innerText.toLowerCase().includes(value.toLowerCase())) option.classList.remove('hidden');
+              });
+            }
+
+        </script>
+    </body>
+</html>

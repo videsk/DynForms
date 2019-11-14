@@ -1,0 +1,143 @@
+<html>
+    <head>
+        <title>Checkbox Component</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+
+            * {
+                font-family: sans-serif;
+                box-sizing: border-box;
+            }
+
+            html, body{
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                font-size: 14px;
+            }
+
+            .container {
+                width: 200px;
+                height: auto;
+            }
+
+            .checkbox-group {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .checkbox-option {
+                margin: 0 0 15px 10px;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                width: auto;
+            }
+
+            .checkbox-group .checkbox-option .checkbox-selector{
+                width: 1.1em;
+                height: 1.1em;
+                border-radius: 2px;
+                background: white;
+                border: 1px solid #d9d9d9;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all .5s ease;
+                margin-right: 7px;
+                cursor: pointer;
+            }
+
+            .checkbox-option.checked .checkbox-selector{
+                border-color: #1890ff;
+                background: #1890ff;
+            }
+
+            .checkbox-group .checkbox-option .checkbox-selector::after{
+                content: '';
+                display: block;
+                width: 75%;
+                height: 75%;
+                background: white;
+                mask: url('../img/check.svg');
+                -webkit-mask: url('../img/check.svg');
+                mask-repeat: no-repeat;
+                -webkit-mask-repeat: no-repeat;
+                mask-size: contain;
+                -webkit-mask-size: contain;
+                transition: all .5s ease;
+                transform: scale(0);
+            }
+
+            .checkbox-option.checked .checkbox-selector::after{
+                transform: scale(1);
+                transition: all .5s ease;
+            }
+
+            .checkbox-group .checkbox-option label {
+                font-size: 1em;
+                font-weight: normal;
+                color: rgba(0, 0, 0, 0.65);
+                cursor: pointer;
+            }
+
+            .checkbox-option.checked label{
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <ul class="checkbox-group">
+                <li class="checkbox-option" data-value="option1">
+                    <div class="checkbox-selector"></div>
+                    <label>Option 1</label>
+                </li>
+                <li class="checkbox-option" data-value="option2">
+                    <div class="checkbox-selector"></div>
+                    <label>Option 2</label>
+                </li>
+                <li class="checkbox-option" data-value="option3">
+                    <div class="checkbox-selector"></div>
+                    <label>Option 3</label>
+                </li>
+                <li class="checkbox-option" data-value="option4">
+                    <div class="checkbox-selector"></div>
+                    <label>Option 4</label>
+                </li>
+            </ul>
+        </div>
+        <div id="value"></div>
+        <script>
+            const form = [];
+
+            const removeSelected = (node) => {
+              const index = form.findIndex(obj => obj.value === node.getAttribute('data-value'));
+              form.splice(index, 1);
+              node.classList.remove('checked');
+            };
+
+            const add = (node) => {
+              const value = node.getAttribute('data-value');
+              const label = node.childNodes[3].innerText;
+              form.push({ value, label });
+              node.classList.add('checked');
+            };
+
+            document.querySelectorAll('.checkbox-group li').forEach(child => {
+              child.onclick = function () {
+                if (this.classList.contains('checked')) removeSelected(this);
+                else add(this);
+              };
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,133 @@
+<html>
+    <head>
+        <title>Radio Component</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+
+            * {
+                font-family: sans-serif;
+                box-sizing: border-box;
+            }
+
+            html, body{
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                font-size: 14px;
+            }
+
+            .container {
+                width: 200px;
+                height: auto;
+            }
+
+            .radio-group {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .radio-option {
+                margin: 0 0 15px 10px;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                width: auto;
+            }
+
+            .radio-group .radio-option .radio-selector{
+                width: 1.1em;
+                height: 1.1em;
+                border-radius: 100%;
+                background: white;
+                border: 1px solid #d9d9d9;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all .5s ease;
+                margin-right: 7px;
+                cursor: pointer;
+            }
+
+            .radio-option.checked .radio-selector{
+                border-color: #1890ff;
+            }
+
+            .radio-group .radio-option .radio-selector::after{
+                content: '';
+                display: block;
+                width: 8px;
+                height: 8px;
+                background: #1890ff;
+                opacity: 0;
+                transition: all .5s ease;
+                border-radius: 100%;
+            }
+
+            .radio-option.checked .radio-selector::after{
+                opacity: 1;
+                transition: all .5s ease;
+            }
+
+            .radio-group .radio-option label {
+                font-size: 1em;
+                font-weight: normal;
+                color: rgba(0, 0, 0, 0.65);
+                cursor: pointer;
+            }
+
+            .radio-option.checked label{
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <ul class="radio-group">
+                <li class="radio-option" data-value="option1">
+                    <div class="radio-selector"></div>
+                    <label>Option 1</label>
+                </li>
+                <li class="radio-option" data-value="option2">
+                    <div class="radio-selector"></div>
+                    <label>Option 2</label>
+                </li>
+                <li class="radio-option" data-value="option3">
+                    <div class="radio-selector"></div>
+                    <label>Option 3</label>
+                </li>
+                <li class="radio-option" data-value="option4">
+                    <div class="radio-selector"></div>
+                    <label>Option 4</label>
+                </li>
+            </ul>
+        </div>
+        <div id="value"></div>
+        <script>
+            const form = {
+              value: null,
+              label: null,
+            };
+
+            const removeAllSeleted = () => {
+              document.querySelectorAll('.radio-group li').forEach(child => child.classList.remove('checked'));
+            };
+
+            document.querySelectorAll('.radio-group li').forEach(child => {
+              child.onclick = function () {
+                removeAllSeleted();
+                form.value = this.getAttribute('data-value');
+                form.label = this.childNodes[3].innerText;
+                child.classList.add('checked');
+              };
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>DynForms Example</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../styles.css" rel="stylesheet" type="text/css"/>
+        <link href="main.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <div class="side-generator">
+            <item>
+                <label>Select Form:</label>
+                <select name="forms">
+                    <option value="1">Input + Textarea</option>
+                    <option value="2">Select + Select Filterable</option>
+                    <option value="3">Multiple + Multiple Filterable</option>
+                    <option value="4">Radio</option>
+                    <option value="5">Checkbox</option>
+                    <option value="6">Rate + Rate  Clearable</option>
+                    <option value="7">All Elements</option>
+                </select>
+            </item>
+            <item>
+                <button class="btn generate">Generate Form</button>
+            </item>
+            <p style="color: gray;">Open DevTools for see the logs!</p>
+        </div>
+        <div id="main-form"></div>
+
+
+        <script src="../dist/dynforms.min.js" async></script>
+        <script src="./form.js" async></script>
+        <script>
+            const clean = () => document.querySelector('#main-form').innerHTML = '';
+            let Form = null;
+            document.querySelector('button.generate').onclick = function () {
+              clean();
+              const select = document.querySelector('[name="forms"]');
+              const { value } = select.options[select.selectedIndex];
+              const form = () => {
+                switch (value) {
+                  case '1': return form1;
+                    break;
+                  case '2': return form2;
+                    break;
+                  case '3': return form3;
+                    break;
+                  case '4': return form4;
+                    break;
+                  case '5': return form5;
+                    break;
+                  case '6': return form6;
+                    break;
+                  case '7': return form7;
+                    break;
+                }
+              };
+              Form = new DynForm({ form: form(), options });
+              Form.render();
+            };
+        </script>
+    </body>
+</html>

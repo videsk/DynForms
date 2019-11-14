@@ -1,0 +1,43 @@
+{
+  "name": "dynforms",
+  "version": "1.0.0",
+  "description": "Dynamics forms generated with JSON schemas",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/videsk/DynForms.git"
+  },
+  "keywords": [
+    "forms",
+    "dynamics",
+    "json",
+    "schemas",
+    "dynamics",
+    "forms",
+    "videsk",
+    "open",
+    "source"
+  ],
+  "author": "Videsk",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/videsk/DynForms/issues"
+  },
+  "homepage": "https://github.com/videsk/DynForms#readme",
+  "dependencies": {
+    "tippy.js": "^5.1.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-es2015": "^6.24.1",
+    "webpack": "^4.39.1",
+    "webpack-cli": "^3.3.6",
+    "babel-plugin-transform-es2015-destructuring": "^6.23.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0"
+  }
+}
