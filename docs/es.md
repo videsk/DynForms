@@ -12,23 +12,23 @@ Puede configurar o agregar sus estilos personalizados para cada componente. En e
 
 ## Índice
 
-- [Ejemplo de prueba](https://github.com/videsk/DynForms#ejemplos-de-prueba)
-- [Instalación](https://github.com/videsk/DynForms#instalacion)
-- [Características](https://github.com/videsk/DynForms#caracteristicas)
-- [Cómo usar](https://github.com/videsk/DynForms#como-usar)
-- [Elementos](https://github.com/videsk/DynForms#elementos)
-- [Propiedades](https://github.com/videsk/DynForms#propiedades)
-    - type
-    - id
-    - label
-    - attr
-    - helps
-    - options
-    - values
-- [Validaciones](https://github.com/videsk/DynForms#validaciones)
-- [Cargas dinámicas](https://github.com/videsk/DynForms#cargas-dinamicas)
-- [Configuración](https://github.com/videsk/DynForms#configuracion)
-- [Derechos de uso](https://github.com/videsk/DynForms#derechos-de-uso)
+- [Ejemplo de prueba](#ejemplos-de-prueba)
+- [Instalación](#instalacion)
+- [Características](#caracteristicas)
+- [Cómo usar](#como-usar)
+- [Elementos](#elementos)
+- [Propiedades](#propiedades)
+    - [type](#type)
+    - [id](#id)
+    - [label](#label)
+    - [attr](#attr)
+    - [helps](#helps)
+    - [options](#options)
+    - [values](#values)
+- [Validaciones](#validaciones)
+- [Cargas dinámicas](#cargas-dinamicas)
+- [Configuración](#configuracion)
+- [Derechos de uso](#derechos-de-uso)
 
 ## Ejemplo de prueba
 
@@ -234,6 +234,12 @@ Esta propiedad es opcional y debe ser de tipo `string`.
 La propiedad `attr` proporciona un listado de atributos que se añadirán al elemento. Algunos ejemplos de attributos serían `class`, `placeholder`, `style`, `disabled`, etc. En el caso de ser añadir una o más clases, estas se anexarán a la por defecto del elemento, que se compone de `dynforms__element`.
 
 Esta propiedad es opcional y debe ser de tipo `object`.
+
+### `helps`
+
+La propiedad `helps` proporciona un tooltip o ayuda flotante hacia los usuarios para entregar más información respecto a la información solicitada. Es posicionado en un icono de pregunta al lado derecho de la propiedad `label` luego de ser renderizado.
+
+Este es un campo opcional y debe ser de tipo `string`.
 
 ### `options`
 
