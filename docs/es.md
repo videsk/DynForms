@@ -193,6 +193,16 @@ form.render();
 
 Con estos dos pasos se obtendrá renderizado un formulario según los elementos entregados en el parámetro `form` y en el elemento del DOM configurado en `options.container`.
 
+## Elementos
+
+El listado de elementos disponibles en la versión actual ![version](https://img.shields.io/github/package-json/v/videsk/DynForms) son:
+
+- `input`
+- `select`
+- `multiple`
+- `radio`
+- `checkbox`
+- `rate`
 
 
 ## Propiedades
@@ -236,6 +246,39 @@ Esta propiedad es obligatoria para `select`, `multiple`, `radio`, `checkbox` y `
 La propiedad `values` proporciona el listado de valores por defecto que estarán seleccionadas en el elemento. Esta propiedad aplica a los mismos elementos que la propiedad `options`.
 
 Esta propiedad es opcional y debe ser de tipo `array` compuesto solo por los valores en formato `string`.
+
+
+### Extras
+
+Para el caso de elementos tipo `select` y `multiple` la propiedad `placeholder` no se debe incluir en `attr` (atributos), si no que en la raíz de las propiedades. Ejemplo:
+
+```js
+{
+  type: 'select' || 'multiple',
+  id: 'country',
+  placeholder: 'Seleccone un país', // Correcto
+  attr: {
+    placeholder: 'Seleccione un país', // Incorrecto
+  },
+  ...
+}
+```
+
+Para el caso de `rate` debe ir obligatoriamente la propiedad `icon` en raíz, el cual proporciona el ícono a utilizar en el elemento de rango. Los iconos disponibles en la versión actual ![version](https://img.shields.io/github/package-json/v/videsk/DynForms) son:
+
+- `star`
+- `heart`
+
+Un ejemplo:
+
+```js
+{
+  type: 'rate',
+  id: 'nps',
+  icon: 'star' || 'heart',
+  ...
+}
+```
 
 ## Validaciones
 
