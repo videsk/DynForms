@@ -12,10 +12,10 @@ Puede configurar o agregar sus estilos personalizados para cada componente. En e
 
 ## Índice
 
-- [Ejemplo de prueba](#ejemplos-de-prueba)
-- [Instalación](#instalacion)
-- [Características](#caracteristicas)
-- [Cómo usar](#como-usar)
+- [Ejemplo de prueba](#ejemplo-de-prueba)
+- [Instalación](#instalación)
+- [Características](#características)
+- [Cómo usar](#cómo-usar)
 - [Elementos](#elementos)
 - [Propiedades](#propiedades)
     - [type](#type)
@@ -25,9 +25,10 @@ Puede configurar o agregar sus estilos personalizados para cada componente. En e
     - [helps](#helps)
     - [options](#options)
     - [values](#values)
+    - [extras](#extras)
 - [Validaciones](#validaciones)
-- [Cargas dinámicas](#cargas-dinamicas)
-- [Configuración](#configuracion)
+- [Cargas dinámicas](#cargas-dinámicas)
+- [Configuración](#configuración)
 - [Derechos de uso](#derechos-de-uso)
 
 ## Ejemplo de prueba
@@ -69,7 +70,7 @@ Con el siguiente ejemplo generaremos un formulario que contenga:
 - Selección múltiple
 - Selección de rango (Rating)
 
-> Para ver ejemplos por cada elemento, vea la sección [Elementos](https://github.com/videsk/DynForms#elementos)
+> Para ver ejemplos por cada elemento, vea la sección [Extras](#extras)
 
 Para generar los tipos de elementos mencionados anteriormente se utilizará el siguiente código:
 
@@ -164,7 +165,7 @@ Para generar los tipos de elementos mencionados anteriormente se utilizará el s
 ];
 ```
 
-Con el anterior formato JSON podrá generar un formulario de forma sencilla. Aún así existe la posibilidad de realizar configuraciones más complejas para cada uno de los elementos, para ello dirígase a la sección [Propiedades](https://github.com/videsk/DynForms#propiedades).
+Con el anterior formato JSON podrá generar un formulario de forma sencilla. Aún así existe la posibilidad de realizar configuraciones más complejas para cada uno de los elementos, para ello dirígase a la sección [Propiedades](#propiedades).
 
 ## ¿Cómo usar?
 
@@ -209,7 +210,7 @@ El listado de elementos disponibles en la versión actual ![version](https://img
 
 Existen propiedades las cuales permiten que DynForms interprete y genere un elemento.
 
-> Hay propiedades que solo están disponibles para ciertos elementos dependiendo de su composición. En esta sección se mencionarán solo los globales, para casos específicos dirígase a la sección [Elementos](https://github.com/videsk/DynForms#elementos).
+> Hay propiedades que solo están disponibles para ciertos elementos dependiendo de su composición. En esta sección se mencionarán solo los globales, para casos específicos dirígase a la sección [Elementos](#elementos).
 
 ### `type`
 
