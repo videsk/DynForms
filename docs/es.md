@@ -70,7 +70,7 @@ Con el siguiente ejemplo generaremos un formulario que contenga:
 - Selección múltiple
 - Selección de rango (Rating)
 
-> Para ver ejemplos por cada elemento, vea la sección [Extras](#extras)
+> Para ver ejemplos por cada elemento, vea el [archivo de ejemplos](https://github.com/videsk/DynForms/blob/master/examples/form.js).
 
 Para generar los tipos de elementos mencionados anteriormente se utilizará el siguiente código:
 
@@ -210,7 +210,7 @@ El listado de elementos disponibles en la versión actual ![version](https://img
 
 Existen propiedades las cuales permiten que DynForms interprete y genere un elemento.
 
-> Hay propiedades que solo están disponibles para ciertos elementos dependiendo de su composición. En esta sección se mencionarán solo los globales, para casos específicos dirígase a la sección [Elementos](#elementos).
+> Hay propiedades que solo están disponibles para ciertos elementos dependiendo de su composición. En esta sección se mencionarán solo los globales, para casos específicos dirígase a la sección [Extras](#extras).
 
 ### `type`
 
