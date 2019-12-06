@@ -10,6 +10,7 @@
 
 import Components from './components/components';
 import tooltip from 'tippy.js';
+import css from './styles.css';
 
 module.exports = class DynForm {
 
@@ -21,12 +22,15 @@ module.exports = class DynForm {
     this.handler = { items: 0 };
     this.prefix = ('prefix' in options) ? options.prefix : 'dynforms__';
     this.types = this.typeElementsAvailable();
+    this.styles = ('styles' in options) ? options.styles : true;
     this.className = (name) => `${this.prefix}${name}`;
   }
 
   render() {
     this.Debug('info', 'DynForms has started...');
-    if (!this.validateOptions) new Error('The options isn\'t valid, please check properties and try again. Read documentation: https://github.com/videsk/DynForms');
+    if (!this.validateOptions) throw new Error('The options isn\'t valid, please check properties and try again. Read documentation: https://github.com/videsk/DynForms');
+    this.Debug('info', 'Injecting CSS to head...');
+    if (this.styles) this.constructor.InjectStyles();
     this.checkUnique(valid => {
       if (valid) this.createForm();
       else new Error('Please check ids, some id elements are repeated. Read documentation: https://github.com/videsk/DynForms' );
@@ -41,6 +45,14 @@ module.exports = class DynForm {
   }
 
   updateData(id, newValue, self) {
+    /*
+    * This function is used in change
+    * event like onkeyup, focus, blur, etc.
+    * for listen new values.
+    *
+    * @param id - String - ID of form element to change value
+    * @param newValue - String - The new value selected
+     */
     self = self || this;
     self.Debug('info', `Updating value of ${id} field...`);
     // Get the index on data array
@@ -70,6 +82,13 @@ module.exports = class DynForm {
   }
 
   renderElement(obj) {
+    /*
+    * This function do the logic for
+    * generate all component of form
+    * element.
+    *
+    * @param obj - Object - Object that contain all structure of form element
+     */
     if (this.types.includes(obj.type)) {
       this.Debug('info', `Rendering ${obj.type} element...`);
       // Create main container
@@ -95,6 +114,13 @@ module.exports = class DynForm {
   }
 
   createElement(obj, parent, id, level) {
+    /*
+    * This is the main function for
+    * create a element.
+    *
+    * @param obj - Object - Object that contain all structure of form element
+    * @param parent - DOM Node - Element where append the created element
+     */
     if ('debug' in this.options && this.options.debug) console.log(`%c ${obj.type} %c ${id}`,
       'background: #137b13; color: white; border-radius: 4px 0 0 4px; padding: 3px 5px; font-weight: normal; text-align: center; box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2); font-family: sans-serif;',
       'background: #2472b7; color: white; border-radius: 0 4px 4px 0; padding: 3px 5px; font-weight: normal; text-align: center; box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2); font-family: sans-serif;');
@@ -108,6 +134,12 @@ module.exports = class DynForm {
   }
 
   createFormElement(obj) {
+    /*
+    * This function create a form
+    * element with a object schema
+    *
+    * @param obj - Object - Object that contain all structure of form element
+     */
     this.Debug('info', `Creating a ${obj.type} form element...`);
     // Get properties of form element
     let component = this.components(this.prefix)[obj.type];
@@ -120,6 +152,16 @@ module.exports = class DynForm {
   };
 
   setContent(element, obj, id, level) {
+    /*
+    * Set content of elements models
+    * this isn't used for generate a
+    * form element.
+    *
+    * @param element - DOM Node - Element to append content
+    * @param obj - Object - Object with all keys of element
+    * @param id - String - ID of element
+    * @param level - Object - Level for get parent info
+     */
   this.Debug('info', `Setting content of ${obj.type} node...`);
     const selectParser = (value) => (value.includes('{')
       && value.includes('}'))
@@ -135,6 +177,15 @@ module.exports = class DynForm {
   }
 
   setAttributes(element, attr, id, level) {
+    /*
+    * Set any attribute do difference with class
+    * and tooltip for extends and append respectively
+    *
+    * @param element - DOM Node - Element to append content
+    * @param attr - Object - Object with attr like { attribute: value }
+    * @param id - String - ID of element
+    * @param level - Object - Level for get parent info
+     */
     this.Debug('info', `Setting attributes of ${id} nodes...`);
     // Validate attributes
     if (this.validateProperty('attr', attr)) {
@@ -151,6 +202,16 @@ module.exports = class DynForm {
   }
 
   setOptions(element, obj, { value, key }, id, level) {
+    /*
+    * This functions append the options
+    * to the form element.
+    *
+    * @param element - DOM Node - Element where append option
+    * @param obj - Object - Object that contain all structure of form element
+    * @param { value, key } - Object|String - Object that contain the value and key of option
+    * @param id - String - ID of element
+    * @param level - Object - Object that contain key on form element and index in this.form
+     */
     this.Debug('info', `Setting options of ${id} field...`);
     // Find index in form
     const index = this.form.findIndex(e => e.id === id);
@@ -170,6 +231,14 @@ module.exports = class DynForm {
   }
 
   setEvents(element, id, events) {
+    /*
+    * This function add the correct
+    * event to the form element.
+    *
+    * @param element - DOM Node - Element where append option
+    * @param id - String - ID of form element
+    * @param events - Object - Object with events to set to element
+     */
     this.Debug('info', `Setting events of ${id} element...`);
     const data = this.searchData(id);
     const properties = this.searchProperty(id);
@@ -185,6 +254,15 @@ module.exports = class DynForm {
   }
 
   parseAttribute(attr, id, level, subkey) {
+    /*
+    * This function add optionals attributes
+    * like placeholder or other.
+    *
+    * @param attr - Object - List of attributes to add
+    * @param id - Object - Object that contain all structure of form element
+    * @param level - Object - Object that contain key on form element and index in this.form
+    * @param subkey - String - The sub key for search attribute
+     */
     this.Debug('info', `Parsing attributes of ${id} field...`);
     if (attr.includes('{') && attr.includes('}')) {
       const key = this.searchProperty(id);
@@ -277,11 +355,21 @@ module.exports = class DynForm {
 
   checkUnique(callback) {
     this.Debug('info', `Checking ids are uniques...`);
-      callback(true);
+    let valid = true;
+      this.form.map(obj => {
+        this.form.map(obj2 => (obj.id === obj2.id) && (valid = false))
+      });
+      callback(valid);
   }
 
   typeElementsAvailable() {
     return Object.keys(this.components(this.prefix)).map(type => type);
+  }
+
+  static InjectStyles() {
+    const element = document.createElement('style');
+    element.innerHTML = `${css}`;
+    document.head.appendChild(element);
   }
 
   validateOptions() {

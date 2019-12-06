@@ -1,6 +1,6 @@
 {
   "name": "@videsk/dynforms",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Dynamics forms generated with JSON schemas",
   "main": "./dist/dynforms.min.js",
   "scripts": {

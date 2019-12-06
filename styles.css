@@ -28,8 +28,8 @@
 }
 
 .dynforms__label .dynforms__tooltip {
-    width: 0.8em;
-    height: 0.8em;
+    width: 0.9em;
+    height: 0.9em;
     background-color: var(--dynforms-default-color);
     mask: url('./img/question.svg');
     -webkit-mask: url('./img/question.svg');
@@ -302,7 +302,9 @@
 .dynforms__radio-group .dynforms__radio-option .dynforms__radio-selector,
 .dynforms__checkbox-group .dynforms__checkbox-option .dynforms__checkbox-selector{
     width: 1.1em;
+    min-width: 1.1em;
     height: 1.1em;
+    mi-height: 1.1em;
     border-radius: 100%;
     background: white;
     border: var(--dynforms-default-border);
@@ -312,6 +314,10 @@
     transition: all .5s ease;
     margin-right: 7px;
     cursor: pointer;
+}
+
+.dynforms__checkbox-group .dynforms__checkbox-option .dynforms__checkbox-selector {
+    border-radius: 3px;
 }
 
 .dynforms__radio-option.dynforms__checked .dynforms__radio-selector,

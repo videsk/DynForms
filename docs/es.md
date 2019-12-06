@@ -13,6 +13,7 @@ Puede configurar o agregar sus estilos personalizados para cada componente. En e
 ## Índice
 
 - [Ejemplo de prueba](#ejemplo-de-prueba)
+- [Playground](#playground)
 - [Instalación](#instalación)
 - [Características](#características)
 - [Cómo usar](#cómo-usar)
@@ -39,11 +40,15 @@ Recuerde que para visualizar los datos debe acceder a la consola de desarrollado
 
 Acceda a la pestaña `Console` o presione la tecla Esc. Luego escriba `Form.data`, mostrando el listado de los valores.
 
+## Playground
+
+Para probar DynForms y crear sus propios formularios acceda [aquí](https://codepen.io/matiaslopezd/pen/vYEORaR).
+
 ## Instalación
 
 Si desea utilizar DynForms en sus proyectos personales o empresariales solo deberá hacerlo mediante:
 
-Via NPM
+Via NPM ![npm-version](https://img.shields.io/npm/v/@videsk/dynforms)
 ```js
 npm i @videsk/dynforms
 ```
