@@ -179,7 +179,7 @@ Para usar DynForms requiere de dos parámetros obligatorios `form` y `options`, 
 Ejemplo:
 
 ```js
-const parameters = { form: [{...}, options: {...}, components: () => ({...})] }
+const parameters = { form: [{...}], options: {...}, components: () => ({...}) }
 ```
 
 > En caso que desee reemplazar la actual estructura HTML de cada elemento proporcione la propiedad `components` como función que retorne un objeto con los elementos.
